@@ -61,7 +61,11 @@ npx expo start
 
 📱 **SCREENSHOTS**
 
-![WhatsApp Image 2025-08-31 at 16 13 45_091a74a7](https://github.com/user-attachments/assets/402b9834-73ac-4d8e-b57d-59e7af0a0ed7) ![WhatsApp Image 2025-08-31 at 16 13 46_d1f44f8b](https://github.com/user-attachments/assets/13293509-f61e-43ad-8d6b-39a05c8c8cec) ![WhatsApp Image 2025-08-31 at 16 13 46_f1f58cda](https://github.com/user-attachments/assets/3f14a8c1-16ae-4f04-b6d4-bb7b1a03143b)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/402b9834-73ac-4d8e-b57d-59e7af0a0ed7" alt="Inbox" width="250"/>
+  <img src="https://github.com/user-attachments/assets/13293509-f61e-43ad-8d6b-39a05c8c8cec" alt="Task Add" width="250"/>
+  <img src="https://github.com/user-attachments/assets/3f14a8c1-16ae-4f04-b6d4-bb7b1a03143b" alt="Dark Mode" width="250"/>
+</p>
 
 
 🎯 **FUTURE IMPROVEMENTS**
