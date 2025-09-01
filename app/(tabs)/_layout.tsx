@@ -9,6 +9,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: '#ffffff',
         tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+        tabBarShowLabel: false, // Hide labels
         tabBarStyle: {
           backgroundColor: 'transparent',
           borderTopWidth: 0,
@@ -19,8 +20,8 @@ export default function TabLayout() {
           paddingTop: 6,
           position: 'absolute',
           bottom: 30,
-          left: 30,
-          right: 30,
+          left: 50,
+          right: 50,
         },
         tabBarBackground: () => (
           <View
@@ -62,7 +63,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Inbox',
           tabBarIcon: ({ color, size, focused }) => (
             <Inbox 
               size={size * 0.9} 
@@ -77,7 +77,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="add-task"
         options={{
-          title: 'Add',
           tabBarIcon: ({ color, size, focused }) => (
             <Plus 
               size={size * 0.9} 
@@ -91,7 +90,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="next-actions"
         options={{
-          title: 'Next',
           tabBarIcon: ({ color, size, focused }) => (
             <Zap 
               size={size * 0.9} 
@@ -106,7 +104,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="projects"
         options={{
-          title: 'Projects',
           tabBarIcon: ({ color, size, focused }) => (
             <FolderOpen 
               size={size * 0.9} 
@@ -121,7 +118,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
           tabBarIcon: ({ color, size, focused }) => (
             <Settings 
               size={size * 0.9} 

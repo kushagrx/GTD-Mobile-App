@@ -62,13 +62,15 @@ const renderSelectionChips = (
           onPress={() => onSelect(option)}
           style={[
             styles.chip,
-            isSelected && styles.selectedChip,
+            isSelected && {
+              backgroundColor: colors?.[option] ?? '#ffffff',
+              borderColor: colors?.[option] ?? '#ffffff',
+            },
           ]}
         >
           <Text style={[
             styles.chipText,
-            { color: isSelected ? styles.selectedChipText.color : 'white' },
-            isSelected && styles.selectedChipText
+            isSelected && { color: '#fff', fontFamily: 'Inter-SemiBold' }
           ]}>
             {option}
           </Text>
