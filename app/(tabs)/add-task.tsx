@@ -19,73 +19,76 @@ import { StatusBar } from 'expo-status-bar';
 
 export default function AddTaskScreen() {
   const { addTask } = useTasks();
-  const router = useRouter();
+const router = useRouter();
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [context, setContext] = useState('');
-  const [type, setType] = useState<Task['type']>('inbox');
-  const [priority, setPriority] = useState<Task['priority']>('medium');
-  const [dueDate, setDueDate] = useState('');
+const [title, setTitle] = useState('');
+const [description, setDescription] = useState('');
+const [context, setContext] = useState('');
+const [type, setType] = useState<Task['type']>('inbox');      
+const [priority, setPriority] = useState<Task['priority']>('low'); 
+const [dueDate, setDueDate] = useState('');
 
-  const handleCreate = () => {
-    if (!title.trim()) {
-      Alert.alert('Missing Title', 'Please enter a task title.');
-      return;
-    }
+const handleCreate = () => {
+  if (!title.trim()) {
+    Alert.alert('Missing Title', 'Please enter a task title.');
+    return;
+  }
 
-    addTask(title.trim(), description.trim(), context, dueDate, type, priority);
-    
-    // Reset form
-    setTitle('');
-    setDescription('');
-    setContext('');
-    setType('inbox');
-    setPriority('medium');
-    setDueDate('');
-    
-    router.back();
-  };
+  addTask(title.trim(), description.trim(), context, dueDate, type, priority);
+  
+  // Reset form
+  setTitle('');
+  setDescription('');
+  setContext('');
+  setType('inbox');          // reset to 'inbox' (default)
+  setPriority('low');        // reset to 'low' (default)
+  setDueDate('');
+  
+  router.back();
+};
 
-  const renderSelectionChips = (
-    options: string[], 
-    selected: string, 
-    onSelect: (value: string) => void,
-    colors?: { [key: string]: string }
-  ) => (
-    <View style={styles.chipContainer}>
-      {options.map((option) => (
+const renderSelectionChips = (
+  options: string[],
+  selected: string,
+  onSelect: (value: string) => void,
+  colors?: { [key: string]: string }
+) => (
+  <View style={styles.chipContainer}>
+    {options.map((option) => {
+      const isSelected = selected === option;
+      return (
         <TouchableOpacity
           key={option}
           onPress={() => onSelect(option)}
           style={[
             styles.chip,
-            selected === option && styles.selectedChip,
-            colors?.[option] && selected === option && { backgroundColor: colors[option] }
+            isSelected && styles.selectedChip,
           ]}
         >
           <Text style={[
             styles.chipText,
-            selected === option && styles.selectedChipText
+            { color: isSelected ? styles.selectedChipText.color : 'white' },
+            isSelected && styles.selectedChipText
           ]}>
             {option}
           </Text>
         </TouchableOpacity>
-      ))}
-    </View>
-  );
+      );
+    })}
+  </View>
+);
 
-  const priorityColors = {
-    low: '#10b981',
-    medium: '#f59e0b',
-    high: '#ef4444'
-  };
+const priorityColors = {
+  low: '#10b981',
+  medium: '#f59e0b',
+  high: '#ef4444'
+};
 
-  const typeColors = {
-    inbox: '#8b5cf6',
-    next: '#06b6d4',
-    project: '#f59e0b'
-  };
+const typeColors = {
+  inbox: '#8b5cf6',
+  next: '#06b6d4',
+  project: '#f59e0b'
+};
 
   return (
     <>
@@ -103,8 +106,12 @@ export default function AddTaskScreen() {
               <Text style={styles.heading}>Capture Task</Text>
               <View style={{ width: 40 }} />
             </View>
-
-            <ScrollView style={styles.form} showsVerticalScrollIndicator={false}>
+  
+            <ScrollView 
+              style={styles.formView}
+              contentContainerStyle={styles.scrollContent}
+              showsVerticalScrollIndicator={false}
+            >
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>What needs to be done?</Text>
                 <TextInput
@@ -116,7 +123,7 @@ export default function AddTaskScreen() {
                   autoFocus
                 />
               </View>
-
+  
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Additional details</Text>
                 <TextInput
@@ -129,7 +136,7 @@ export default function AddTaskScreen() {
                   numberOfLines={3}
                 />
               </View>
-
+  
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>
                   <Flag size={16} color="#ffffff" /> Priority
@@ -141,7 +148,7 @@ export default function AddTaskScreen() {
                   priorityColors
                 )}
               </View>
-
+  
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Context (Where/When)</Text>
                 {renderSelectionChips(
@@ -150,7 +157,7 @@ export default function AddTaskScreen() {
                   setContext
                 )}
               </View>
-
+  
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Type</Text>
                 {renderSelectionChips(
@@ -160,8 +167,11 @@ export default function AddTaskScreen() {
                   typeColors
                 )}
               </View>
-
-              <View style={styles.inputGroup}>
+  
+              <TouchableOpacity style={styles.submitButton} onPress={handleCreate}>
+                <Text style={styles.submitText}>Capture Task</Text>
+              </TouchableOpacity>
+              {/* <View style={styles.inputGroup}>
                 <Text style={styles.label}>
                   <Calendar size={16} color="#ffffff" /> Due Date (Optional)
                 </Text>
@@ -172,17 +182,14 @@ export default function AddTaskScreen() {
                   onChangeText={setDueDate}
                   style={styles.input}
                 />
-              </View>
+              </View> */}
 
-              <TouchableOpacity style={styles.submitButton} onPress={handleCreate}>
-                <Text style={styles.submitText}>Capture Task</Text>
-              </TouchableOpacity>
             </ScrollView>
           </KeyboardAvoidingView>
         </SafeAreaView>
       </LinearGradient>
     </>
-  );
+  );  
 }
 
 const styles = StyleSheet.create({
@@ -194,6 +201,7 @@ const styles = StyleSheet.create({
   },
   keyboardView: {
     flex: 1,
+    position: 'relative', // Enables absolute positioning of button
   },
   header: {
     flexDirection: 'row',
@@ -211,9 +219,12 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontFamily: 'Inter-Bold',
   },
-  form: {
+  formView: {
     flex: 1,
     paddingHorizontal: 20,
+  },
+  scrollContent: {
+    paddingBottom: 100, // Space for the nav bar
   },
   inputGroup: {
     marginBottom: 24,
@@ -287,8 +298,8 @@ const styles = StyleSheet.create({
     padding: 18,
     borderRadius: 16,
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 40,
+    marginTop: 32,
+    marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

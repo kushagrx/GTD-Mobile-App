@@ -59,7 +59,7 @@ export default function NextActionsScreen() {
   return (
     <>
       <StatusBar style="light" translucent backgroundColor="transparent" />
-      <LinearGradient colors={['#06b6d4', '#3b82f6']} style={styles.container}>
+      <LinearGradient colors={['#1a0033', '#4b0082']} style={styles.container}>
         <SafeAreaView style={styles.safeArea}>
           <View style={styles.header}>
             <View style={styles.titleContainer}>
