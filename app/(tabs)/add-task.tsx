@@ -51,26 +51,47 @@ const renderSelectionChips = (
   options: string[],
   selected: string,
   onSelect: (value: string) => void,
-  colors?: { [key: string]: string }
+  colors?: { [key: string]: string },
+  useColoredBackground: boolean = false
 ) => (
   <View style={styles.chipContainer}>
     {options.map((option) => {
       const isSelected = selected === option;
+
+      const backgroundColor = useColoredBackground
+        ? isSelected
+          ? colors?.[option] ?? '#ffffff'
+          : '#ffffff'
+        : isSelected
+          ? '#ffffff'                          // white background when selected
+          : 'rgba(255, 255, 255, 0.15)';      // purple translucent when unselected
+
+      const textColor = useColoredBackground
+        ? isSelected
+          ? '#ffffff'                           // white text on colored bg
+          : colors?.[option] ?? 'rgba(255,255,255,0.8)' // colored text on white bg for unselected
+        : isSelected
+          ? '#667eea'                          // purple text when selected (context/type)
+          : '#ffffff';                         // white text when unselected (context/type)
+
       return (
         <TouchableOpacity
           key={option}
           onPress={() => onSelect(option)}
           style={[
             styles.chip,
-            isSelected && {
-              backgroundColor: colors?.[option] ?? '#ffffff',
-              borderColor: colors?.[option] ?? '#ffffff',
+            { 
+              backgroundColor, 
+              borderColor: useColoredBackground 
+                ? (isSelected ? backgroundColor : 'rgba(255, 255, 255, 0.4)')
+                : (isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.4)')
             },
           ]}
+          keyboardShouldPersistTaps="handled"
         >
           <Text style={[
             styles.chipText,
-            isSelected && { color: '#fff', fontFamily: 'Inter-SemiBold' }
+            { color: textColor }
           ]}>
             {option}
           </Text>
@@ -81,9 +102,9 @@ const renderSelectionChips = (
 );
 
 const priorityColors = {
-  low: '#10b981',
-  medium: '#f59e0b',
-  high: '#ef4444'
+  low: '#22c55e',    // Green
+  medium: '#eab308',  // Yellow  
+  high: '#ef4444'     // Red
 };
 
 const typeColors = {
@@ -144,20 +165,21 @@ const typeColors = {
                   <Flag size={16} color="#ffffff" /> Priority
                 </Text>
                 {renderSelectionChips(
-                  ['low', 'medium', 'high'], 
-                  priority, 
-                  (value: string) => setPriority(value as 'low' | 'medium' | 'high'),
-                  priorityColors
-                )}
+                    ['low', 'medium', 'high'], 
+                    priority, 
+                    (value) => setPriority(value as 'low' | 'medium' | 'high'), 
+                    priorityColors, 
+                    true   // use colored backgrounds when selected
+                  )}
               </View>
   
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Context (Where/When)</Text>
                 {renderSelectionChips(
-                  ['@home', '@college', '@errands', '@work', '@calls', '@computer'], 
-                  context, 
-                  setContext
-                )}
+                    ['@home', '@college', '@errands', '@work', '@calls', '@computer'], 
+                    context, 
+                    setContext
+                  )}
               </View>
   
               <View style={styles.inputGroup}>
@@ -165,8 +187,9 @@ const typeColors = {
                 {renderSelectionChips(
                   ['inbox', 'next', 'project'], 
                   type, 
-                  (value: string) => setType(value as 'inbox' | 'next' | 'project'),
-                  typeColors
+                  (value) => setType(value as 'inbox' | 'next' | 'project'), 
+                  typeColors,
+                  true
                 )}
               </View>
   
@@ -219,14 +242,15 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 20,
     color: '#ffffff',
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
   },
   formView: {
     flex: 1,
     paddingHorizontal: 20,
   },
   scrollContent: {
-    paddingBottom: 100, // Space for the nav bar
+    paddingBottom: Platform.OS === 'ios' ? 140 : 120, // Extra space for iOS nav bar
   },
   inputGroup: {
     marginBottom: 24,
@@ -235,7 +259,8 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     marginBottom: 12,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'System',
+    fontWeight: '600',
   },
   titleInput: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
@@ -243,7 +268,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
   },
@@ -253,7 +279,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     fontSize: 14,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
     minHeight: 80,
@@ -265,7 +292,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     fontSize: 14,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
   },
@@ -285,7 +313,8 @@ const styles = StyleSheet.create({
   chipText: {
     color: 'rgba(255, 255, 255, 0.8)',
     fontSize: 14,
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'System',
+    fontWeight: '500',
   },
   selectedChip: {
     backgroundColor: '#ffffff',
@@ -293,7 +322,8 @@ const styles = StyleSheet.create({
   },
   selectedChipText: {
     color: '#667eea',
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'System',
+    fontWeight: '600',
   },
   submitButton: {
     backgroundColor: '#ffffff',
@@ -314,6 +344,7 @@ const styles = StyleSheet.create({
   submitText: {
     color: '#667eea',
     fontSize: 16,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
   },
 });

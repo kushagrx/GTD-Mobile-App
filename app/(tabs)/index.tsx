@@ -107,21 +107,24 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   greeting: {
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     color: 'rgba(255, 255, 255, 0.8)',
     fontSize: 16,
     marginBottom: 4,
   },
   heading: {
     fontSize: 32,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
     color: '#ffffff',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
     color: 'rgba(255, 255, 255, 0.7)',
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
   },
   filterButton: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -136,7 +139,8 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 24,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
     color: '#ffffff',
     marginBottom: 8,
     textAlign: 'center',
@@ -147,7 +151,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 32,
     lineHeight: 24,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
   },
   addButton: {
     flexDirection: 'row',
@@ -160,7 +165,8 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     fontSize: 16,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'System',
+    fontWeight: '600',
     color: '#667eea',
   },
   listContainer: {

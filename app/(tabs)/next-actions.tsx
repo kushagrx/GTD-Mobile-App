@@ -20,7 +20,7 @@ export default function NextActionsScreen() {
   });
 
   const contexts = ['@home', '@college', '@errands', '@work', '@calls', '@computer'];
-  const priorities = ['high', 'medium', 'low'];
+  const priorities = ['low', 'medium', 'high'];
 
   const renderFilterChips = (
     options: string[], 
@@ -136,12 +136,14 @@ const styles = StyleSheet.create({
   heading: {
     color: '#ffffff',
     fontSize: 28,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
   },
   subtitle: {
     fontSize: 14,
     color: 'rgba(255, 255, 255, 0.8)',
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
   },
   filtersContainer: {
     marginBottom: 20,
@@ -149,7 +151,8 @@ const styles = StyleSheet.create({
   filterLabel: {
     color: '#ffffff',
     fontSize: 14,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'System',
+    fontWeight: '600',
     marginBottom: 8,
     marginTop: 12,
   },
@@ -169,7 +172,8 @@ const styles = StyleSheet.create({
   filterText: {
     color: 'rgba(255, 255, 255, 0.8)',
     fontSize: 12,
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'System',
+    fontWeight: '500',
   },
   selectedFilter: {
     backgroundColor: '#ffffff',
@@ -177,17 +181,20 @@ const styles = StyleSheet.create({
   },
   selectedFilterText: {
     color: '#06b6d4',
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'System',
+    fontWeight: '600',
   },
   emptyState: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 40,
+    paddingHorizontal: 30,
+    marginBottom: 80
   },
   emptyTitle: {
     fontSize: 20,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
     color: '#ffffff',
     marginBottom: 8,
     textAlign: 'center',
@@ -197,7 +204,8 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
     lineHeight: 20,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
   },
   listContainer: {
     paddingBottom: 100,

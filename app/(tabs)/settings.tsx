@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Settings, User, Bell, Shield, HelpCircle, Info } from 'lucide-react-native';
+import { Settings, User, Bell, Shield, CircleHelp as HelpCircle, Info } from 'lucide-react-native';
 
 export default function SettingsScreen() {
   return (
@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 32,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
     color: '#ffffff',
     marginLeft: 12,
   },
@@ -75,11 +76,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 18,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'System',
+    fontWeight: '600',
     color: 'rgba(255, 255, 255, 0.8)',
     marginBottom: 16,
   },
@@ -93,7 +95,8 @@ const styles = StyleSheet.create({
   },
   settingText: {
     fontSize: 16,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
     color: '#ffffff',
     marginLeft: 12,
   },

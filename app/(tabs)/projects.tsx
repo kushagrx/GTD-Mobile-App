@@ -107,12 +107,14 @@ const styles = StyleSheet.create({
   heading: {
     color: '#ffffff',
     fontSize: 28,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
   },
   subtitle: {
     fontSize: 14,
     color: 'rgba(255, 255, 255, 0.8)',
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
   },
   statsContainer: {
     flexDirection: 'row',
@@ -130,13 +132,15 @@ const styles = StyleSheet.create({
   },
   statNumber: {
     fontSize: 24,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
     color: '#ffffff',
     marginTop: 4,
   },
   statLabel: {
     fontSize: 12,
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'System',
+    fontWeight: '500',
     color: 'rgba(255, 255, 255, 0.8)',
     marginTop: 2,
   },
@@ -151,7 +155,8 @@ const styles = StyleSheet.create({
   toggleText: {
     color: '#ffffff',
     fontSize: 14,
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'System',
+    fontWeight: '500',
   },
   emptyState: {
     flex: 1,
@@ -161,7 +166,8 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 20,
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'System',
+    fontWeight: '700',
     color: '#ffffff',
     marginBottom: 8,
     textAlign: 'center',
@@ -171,7 +177,8 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
     lineHeight: 20,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'System',
+    fontWeight: '400',
   },
   listContainer: {
     paddingBottom: 100,
