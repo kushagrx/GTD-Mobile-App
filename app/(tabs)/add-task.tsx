@@ -87,7 +87,6 @@ const renderSelectionChips = (
                 : (isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.4)')
             },
           ]}
-          keyboardShouldPersistTaps="handled"
         >
           <Text style={[
             styles.chipText,
