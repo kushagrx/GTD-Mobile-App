@@ -66,7 +66,7 @@ export default function InboxScreen() {
               <View style={styles.statsContent}>
                 <Sparkles size={20} color="#fbbf24" />
                 <Text style={styles.statsText}>
-                  You're doing great! {incompleteTasks.length} items to clear your mind.
+                  You're doing great! {incompleteTasks.length} tasks left to check off.
                 </Text>
               </View>
             </Animated.View>

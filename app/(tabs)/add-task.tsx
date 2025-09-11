@@ -9,7 +9,8 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  Dimensions
+  Dimensions,
+  Modal
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,6 +19,7 @@ import { ArrowLeft, Calendar, Flag, Sparkles, Target } from 'lucide-react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import Animated, { FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 const { width } = Dimensions.get('window');
 
@@ -31,6 +33,8 @@ const [context, setContext] = useState('');
 const [type, setType] = useState<Task['type']>('inbox');      
 const [priority, setPriority] = useState<Task['priority']>('low'); 
 const [dueDate, setDueDate] = useState('');
+const [showDatePicker, setShowDatePicker] = useState(false);
+const [date, setDate] = useState<Date | null>(null);
 
 const handleCreate = () => {
   if (!title.trim()) {
@@ -48,6 +52,28 @@ const handleCreate = () => {
   setDueDate('');
   
   router.back();
+};
+
+const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+  const { type } = event;
+  
+  if (Platform.OS === 'android') {
+    setShowDatePicker(false);
+    if (type === "set" && selectedDate) {
+      setDate(selectedDate);
+      setDueDate(selectedDate.toLocaleDateString());
+    }
+  } else {
+    // For iOS, just update the date without closing the modal
+    if (selectedDate) {
+      setDate(selectedDate);
+      setDueDate(selectedDate.toLocaleDateString());
+    }
+  }
+};
+
+const showDatePickerModal = () => {
+  setShowDatePicker(true);
 };
 
 const renderSelectionChips = (
@@ -105,9 +131,9 @@ const renderSelectionChips = (
 );
 
 const priorityColors = {
-  low: '#22c55e',    // Green
-  medium: '#eab308',  // Yellow  
-  high: '#ef4444'     // Red
+  low: '#22c55e',    
+  medium: '#eab308',   
+  high: '#ef4444'     
 };
 
 const typeColors = {
@@ -163,7 +189,6 @@ const typeColors = {
                   value={title}
                   onChangeText={setTitle}
                   style={styles.titleInput}
-                  autoFocus
                 />
               </Animated.View>
   
@@ -213,6 +238,65 @@ const typeColors = {
                 )}
               </Animated.View>
   
+              <Animated.View entering={FadeInDown.delay(800)} style={styles.inputGroup}>
+                <Text style={styles.label}>
+                  <Calendar size={16} color="#ffffff" /> Due Date (Optional)
+                </Text>
+                <TouchableOpacity
+                  onPress={showDatePickerModal}
+                  style={styles.datePickerButton}
+                >
+                  <Text style={[styles.datePickerText, date && styles.datePickerTextSelected]}>
+                    {date ? date.toLocaleDateString() : 'Select due date'}
+                  </Text>
+                </TouchableOpacity>
+
+                {showDatePicker && (
+                  Platform.OS === 'ios' ? (
+                    <Modal
+                      visible={showDatePicker}
+                      transparent={true}
+                      animationType="slide"
+                    >
+                      <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                          <View style={styles.modalHeader}>
+                            <TouchableOpacity
+                              style={styles.modalHeaderButton}
+                              onPress={() => setShowDatePicker(false)}
+                            >
+                              <Text style={[styles.modalHeaderText, { color: '#667eea' }]}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              style={styles.modalHeaderButton}
+                              onPress={() => setShowDatePicker(false)}
+                            >
+                              <Text style={[styles.modalHeaderText, { color: '#667eea', fontWeight: '600' }]}>Done</Text>
+                            </TouchableOpacity>
+                          </View>
+                          <DateTimePicker
+                            value={date || new Date()}
+                            mode="date"
+                            display="spinner"
+                            onChange={handleDateChange}
+                            minimumDate={new Date()}
+                            textColor="#000000"
+                          />
+                        </View>
+                      </View>
+                    </Modal>
+                  ) : (
+                    <DateTimePicker
+                      value={date || new Date()}
+                      mode="date"
+                      display="default"
+                      onChange={handleDateChange}
+                      minimumDate={new Date()}
+                    />
+                  )
+                )}
+              </Animated.View>
+  
               <Animated.View entering={SlideInRight.delay(900)}>
                 <TouchableOpacity 
                   style={styles.submitButton} 
@@ -228,19 +312,6 @@ const typeColors = {
                   </LinearGradient>
                 </TouchableOpacity>
               </Animated.View>
-              {/* <View style={styles.inputGroup}>
-                <Text style={styles.label}>
-                  <Calendar size={16} color="#ffffff" /> Due Date (Optional)
-                </Text>
-                <TextInput
-                  placeholder="e.g., Tomorrow, Dec 25, Next Friday"
-                  placeholderTextColor="rgba(255, 255, 255, 0.6)"
-                  value={dueDate}
-                  onChangeText={setDueDate}
-                  style={styles.input}
-                />
-              </View> */}
-
             </ScrollView>
           </KeyboardAvoidingView>
         </SafeAreaView>
@@ -258,7 +329,7 @@ const styles = StyleSheet.create({
   },
   keyboardView: {
     flex: 1,
-    position: 'relative', // Enables absolute positioning of button
+    position: 'relative', 
   },
   header: {
     flexDirection: 'row',
@@ -427,5 +498,57 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
     letterSpacing: 0.3,
+  },
+  datePickerButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    padding: 18,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  datePickerText: {
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 15,
+    fontFamily: 'System',
+    fontWeight: '500',
+  },
+  datePickerTextSelected: {
+    color: '#ffffff',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  modalHeaderButton: {
+    padding: 10,
+  },
+  modalHeaderText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  modalButton: {
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: '#667eea',
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  modalButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
