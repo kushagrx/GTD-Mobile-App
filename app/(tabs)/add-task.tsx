@@ -40,12 +40,11 @@ const handleCreate = () => {
 
   addTask(title.trim(), description.trim(), context, dueDate, type, priority);
   
-  // Reset form
   setTitle('');
   setDescription('');
   setContext('');
-  setType('inbox');          // reset to 'inbox' (default)
-  setPriority('low');        // reset to 'low' (default)
+  setType('inbox');          
+  setPriority('low');        
   setDueDate('');
   
   router.back();
@@ -67,16 +66,16 @@ const renderSelectionChips = (
           ? colors?.[option] ?? '#ffffff'
           : '#ffffff'
         : isSelected
-          ? '#ffffff'                          // white background when selected
-          : 'rgba(255, 255, 255, 0.15)';      // purple translucent when unselected
+          ? '#ffffff'                          
+          : 'rgba(255, 255, 255, 0.15)';      
 
       const textColor = useColoredBackground
         ? isSelected
-          ? '#ffffff'                           // white text on colored bg
-          : colors?.[option] ?? 'rgba(255,255,255,0.8)' // colored text on white bg for unselected
+          ? '#ffffff'                           
+          : colors?.[option] ?? 'rgba(255,255,255,0.8)' 
         : isSelected
-          ? '#667eea'                          // purple text when selected (context/type)
-          : '#ffffff';                         // white text when unselected (context/type)
+          ? '#667eea'                          
+          : '#ffffff';                        
 
       return (
         <TouchableOpacity
