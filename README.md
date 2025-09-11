@@ -62,9 +62,9 @@ npx expo start
 📱 **SCREENSHOTS**
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/402b9834-73ac-4d8e-b57d-59e7af0a0ed7" alt="Inbox" width="250"/>
-  <img src="https://github.com/user-attachments/assets/13293509-f61e-43ad-8d6b-39a05c8c8cec" alt="Task Add" width="250"/>
-  <img src="https://github.com/user-attachments/assets/3f14a8c1-16ae-4f04-b6d4-bb7b1a03143b" alt="Dark Mode" width="250"/>
+  <img src="https://github.com/user-attachments/assets/5ddabc61-ffc9-4ef8-a41b-e8e9610ea2cc" alt="Inbox" width="250"/>
+  <img src="https://github.com/user-attachments/assets/f83f3fcc-ff91-4bb6-bbcf-6475b147e598" alt="Task Add" width="250"/>
+  <img src="https://github.com/user-attachments/assets/4de8da24-d4d3-4782-b3fb-7f1fca261528" alt="Dark Mode" width="250"/>
 </p>
 
 
