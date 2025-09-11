@@ -87,21 +87,15 @@ const renderSelectionChips = (
     {options.map((option) => {
       const isSelected = selected === option;
 
-      const backgroundColor = useColoredBackground
-        ? isSelected
-          ? colors?.[option] ?? '#ffffff'
-          : '#ffffff'
-        : isSelected
-          ? '#ffffff'                          
-          : 'rgba(255, 255, 255, 0.15)';      
+      const backgroundColor = isSelected && useColoredBackground
+        ? colors?.[option] ?? '#ffffff'
+        : 'rgba(255, 255, 255, 0.15)';      
 
-      const textColor = useColoredBackground
-        ? isSelected
-          ? '#ffffff'                           
-          : colors?.[option] ?? 'rgba(255,255,255,0.8)' 
-        : isSelected
-          ? '#667eea'                          
-          : '#ffffff';                        
+      const textColor = isSelected
+        ? useColoredBackground 
+          ? '#ffffff'
+          : '#667eea'
+        : '#ffffff';
 
       return (
         <TouchableOpacity
@@ -110,10 +104,12 @@ const renderSelectionChips = (
           style={[
             styles.chip,
             { 
-              backgroundColor, 
-              borderColor: useColoredBackground 
-                ? (isSelected ? backgroundColor : 'rgba(255, 255, 255, 0.4)')
-                : (isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.4)')
+              backgroundColor,
+              borderColor: isSelected 
+                ? useColoredBackground 
+                  ? colors?.[option] ?? '#ffffff'
+                  : '#ffffff'
+                : 'rgba(255, 255, 255, 0.4)'
             },
           ]}
           keyboardShouldPersistTaps="handled"
