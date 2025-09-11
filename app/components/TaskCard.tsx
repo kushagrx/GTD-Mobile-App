@@ -38,7 +38,7 @@ export default function TaskCard({ task, onToggleComplete, onDelete, showActions
 
   const handleCardPress = () => {
     if (translateX.value === 0) {
-      router.push(`/task-detail/${task.id}`);
+      router.push(`../task-detail/${task.id}`);
     }
   };
 
